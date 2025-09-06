@@ -25,9 +25,18 @@ export const gameState = {
 };
 
 // Brick settings
+export const level1 = [
+  1, 0, 0, 0, 0, 1,
+  1, 0, 0, 0, 0, 1,
+  1, 1, 1, 1, 1, 1,
+  1, 0, 0, 0, 0, 1,
+  1, 1, 0, 0, 1, 1,
+]
+
+// Brick settings
 export const brick = {
   rows: 6,
-  cols: 6 ,
+  cols: 6,
   gap: 10,
   width: 0,
   height: 0,

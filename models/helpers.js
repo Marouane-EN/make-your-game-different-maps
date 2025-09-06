@@ -35,9 +35,12 @@ export function draw() {
 export function createBricks() {
   config.bricksContainer.innerHTML = "";
   config.bricksPositions.length = 0;
+  let row = 0
+  let col = 0
+  for (let i = 0; i < config.level1.length; i++) {
+    if (config.level1[i] == 1) {
 
-  for (let row = 0; row < config.brick.rows; row++) {
-    for (let col = 0; col < config.brick.cols; col++) {
+
       const div = document.createElement("div");
       div.classList.add("brick", config.brick.colors[row]);
       div.style.width = `${config.brick.width}px`;
@@ -47,6 +50,7 @@ export function createBricks() {
         config.brick.gap + col * (config.brick.width + config.brick.gap);
       const y =
         config.brick.gap + row * (config.brick.height + config.brick.gap);
+
       div.style.transform = `translate(${x}px, ${y}px)`;
 
       config.bricksContainer.appendChild(div);
@@ -59,6 +63,12 @@ export function createBricks() {
         status: true,
       });
     }
+    col++
+    if (col === config.brick.cols) {
+      row++
+      col = 0
+    }
+
   }
 }
 export function setupSizes() {
