@@ -157,8 +157,19 @@ function update() {
   const allBricksBroken = config.bricksPositions.every(
     (b) => b.status === false
   );
+    if (
+    allBricksBroken &&
+    config.Levels.level < 3 &&
+    !config.gameState.gameOver &&
+    !config.gameState.gameWine
+  ) {
+    config.Levels.level++
+    nextLevel();
+    return;
+  }
   if (
     allBricksBroken &&
+    config.Levels.level === 3 &&
     !config.gameState.gameOver &&
     !config.gameState.gameWine
   ) {
@@ -167,6 +178,10 @@ function update() {
     gameWin();
     return;
   }
+}
+
+function nextLevel() {
+  createBricks()
 }
 
 function GameLoop() {

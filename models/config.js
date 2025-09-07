@@ -24,12 +24,28 @@ export const gameState = {
   gameWine: false,
 };
 
-// Brick settings
-export const level1 = [
-  1, 0, 0, 0, 0, 1,
-  1, 0, 0, 0, 0, 1,
+// Levels
+export const Level1 = [
+  0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0,
   1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1,
+]
+
+export const Level2 = [
+  1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1,
+  1, 1, 0, 0, 1, 1,
   1, 0, 0, 0, 0, 1,
+  0, 0, 0, 0, 0, 0,
+]
+
+export const Level3 = [
+  1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1,
   1, 1, 0, 0, 1, 1,
 ]
 
@@ -95,3 +111,10 @@ export const gameStatus = {
 export const requestID = { id: null };
 
 export let wait = { status: false };
+
+export const Levels = {
+  level: 1,
+  1: Level1,
+  2: Level2,
+  3: Level3,
+};

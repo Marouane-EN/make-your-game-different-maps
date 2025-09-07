@@ -35,40 +35,32 @@ export function draw() {
 export function createBricks() {
   config.bricksContainer.innerHTML = "";
   config.bricksPositions.length = 0;
-  let row = 0
-  let col = 0
-  for (let i = 0; i < config.level1.length; i++) {
-    if (config.level1[i] == 1) {
+  for (let row = 0; row < config.brick.rows; row++) {
+    for (let col = 0; col < config.brick.cols; col++) {
+      if (config.Levels[config.Levels.level][row * config.brick.cols + col] == 1) {
+        const div = document.createElement("div");
+        div.classList.add("brick", config.brick.colors[row]);
+        div.style.width = `${config.brick.width}px`;
+        div.style.height = `${config.brick.height}px`;
 
+        const x =
+          config.brick.gap + col * (config.brick.width + config.brick.gap);
+        const y =
+          config.brick.gap + row * (config.brick.height + config.brick.gap);
 
-      const div = document.createElement("div");
-      div.classList.add("brick", config.brick.colors[row]);
-      div.style.width = `${config.brick.width}px`;
-      div.style.height = `${config.brick.height}px`;
+        div.style.transform = `translate(${x}px, ${y}px)`;
 
-      const x =
-        config.brick.gap + col * (config.brick.width + config.brick.gap);
-      const y =
-        config.brick.gap + row * (config.brick.height + config.brick.gap);
-
-      div.style.transform = `translate(${x}px, ${y}px)`;
-
-      config.bricksContainer.appendChild(div);
-      config.bricksPositions.push({
-        element: div,
-        x,
-        y,
-        width: config.brick.width,
-        height: config.brick.height,
-        status: true,
-      });
+        config.bricksContainer.appendChild(div);
+        config.bricksPositions.push({
+          element: div,
+          x,
+          y,
+          width: config.brick.width,
+          height: config.brick.height,
+          status: true,
+        });
+      }
     }
-    col++
-    if (col === config.brick.cols) {
-      row++
-      col = 0
-    }
-
   }
 }
 export function setupSizes() {
