@@ -130,6 +130,7 @@ function update(delta) {
 
     if (isColliding) {
       if (b.type > 1 && b.count < 1) {
+        b.element.classList.add("crack")
         b.count++;
       } else {
         b.status = false;
