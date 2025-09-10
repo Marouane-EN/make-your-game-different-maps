@@ -37,7 +37,8 @@ export function createBricks() {
   config.bricksPositions.length = 0;
   for (let row = 0; row < config.brick.rows; row++) {
     for (let col = 0; col < config.brick.cols; col++) {
-      if (config.Levels[config.Levels.level][row * config.brick.cols + col] == 1) {
+      const type = config.Levels[config.Levels.level][row * config.brick.cols + col]
+      if (type > 0) {
         const div = document.createElement("div");
         div.classList.add("brick", config.brick.colors[row]);
         div.style.width = `${config.brick.width}px`;
@@ -57,6 +58,8 @@ export function createBricks() {
           y,
           width: config.brick.width,
           height: config.brick.height,
+          type,
+          count: 0,
           status: true,
         });
       }

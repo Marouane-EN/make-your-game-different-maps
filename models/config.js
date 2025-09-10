@@ -30,7 +30,7 @@ export const Level1 = [
   0, 0, 0, 0, 0, 0,
   1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1,
+  1, 1, 2, 2, 1, 1,
 ]
 
 export const Level2 = [
@@ -111,6 +111,8 @@ export const gameStatus = {
 export const requestID = { id: null };
 
 export let wait = { status: false };
+
+export const lastTime = {time: performance.now()}
 
 export const Levels = {
   level: 1,

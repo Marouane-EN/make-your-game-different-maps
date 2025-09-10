@@ -17,10 +17,13 @@ import {
   gameWin,
 } from "./models/gameStatus.js";
 
-function loop() {
+function loop(now) {
+
+  let delta = (now - config.lastTime.time) / 1000; // convert ms → seconds
+  config.lastTime.time = now;
   if (!config.gameState.gameStart && !config.wait.status) return;
   if (config.gameState.gameStart && !config.wait.status) {
-    update();
+    update(delta);
     draw();
     config.requestID.id = requestAnimationFrame(loop);
   } else if (
@@ -36,10 +39,14 @@ function loop() {
   }
 }
 
-function update() {
+function update(delta) {
+
   movePaddle(config.cursors, config.paddle, config.cvs);
-  config.ball.x += config.ball.dx;
-  config.ball.y += config.ball.dy;
+  if (isNaN(delta)) {
+    delta = 0.016;
+  }
+  config.ball.x += config.ball.dx * delta * 60;
+  config.ball.y += config.ball.dy * delta * 60;
 
   if (
     config.ball.x <= 0 ||
@@ -62,7 +69,6 @@ function update() {
       return;
     }
     config.wait.status = true;
-    //clearAnimation();
     setTimeout(() => {
       config.wait.status = false;
       clearAnimation();
@@ -123,8 +129,12 @@ function update() {
       ballTop < brickBottom;
 
     if (isColliding) {
-      b.status = false;
-      b.element.style.opacity = 0;
+      if (b.type > 1 && b.count < 1) {
+        b.count++;
+      } else {
+        b.status = false;
+        b.element.style.opacity = 0;
+      }
 
       // Calculate how deep the ball overlaps on each side
       const overlapLeft = ballRight - brickLeft;
@@ -157,13 +167,13 @@ function update() {
   const allBricksBroken = config.bricksPositions.every(
     (b) => b.status === false
   );
-    if (
+  if (
     allBricksBroken &&
     config.Levels.level < 3 &&
     !config.gameState.gameOver &&
     !config.gameState.gameWine
   ) {
-    config.Levels.level++
+    config.Levels.level++;
     nextLevel();
     return;
   }
@@ -181,7 +191,15 @@ function update() {
 }
 
 function nextLevel() {
-  createBricks()
+  config.wait.status = true;
+  setTimeout(() => {
+    config.wait.status = false;
+    clearAnimation();
+    loop();
+  }, 1500);
+  config.ball.speed += 3;
+  resetBall();
+  createBricks();
 }
 
 function GameLoop() {
@@ -199,7 +217,6 @@ function GameLoop() {
 
   config.restartBtn.addEventListener("click", () => {
     Restart();
-
   });
 
   let spaceCooldown = false;
@@ -222,7 +239,7 @@ function GameLoop() {
         clearAnimation();
         loop();
       } else if (config.gameState.gameStart && !config.gameState.gamePause) {
-        config.gameContainer.style.opacity = '0.3';
+        config.gameContainer.style.opacity = "0.3";
         config.gameState.gamePause = true;
         config.gameState.gameStart = false;
         clearAnimation();
