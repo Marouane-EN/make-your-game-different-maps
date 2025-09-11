@@ -18,7 +18,6 @@ import {
 } from "./models/gameStatus.js";
 
 function loop(now) {
-
   let delta = (now - config.lastTime.time) / 1000; // convert ms → seconds
   config.lastTime.time = now;
   if (!config.gameState.gameStart && !config.wait.status) return;
@@ -40,7 +39,6 @@ function loop(now) {
 }
 
 function update(delta) {
-
   movePaddle(config.cursors, config.paddle, config.cvs);
   if (isNaN(delta)) {
     delta = 0.016;
@@ -48,15 +46,23 @@ function update(delta) {
   config.ball.x += config.ball.dx * delta * 60;
   config.ball.y += config.ball.dy * delta * 60;
 
-  if (
-    config.ball.x <= 0 ||
-    config.ball.x + config.ball.width >= config.cvs.width
-  ) {
-    config.ball.dx *= -1;
+  if (config.ball.x <= 0) {
+    if (config.ball.dx < 0) {
+      config.ball.dx *= -1;
+    }
+    return;
+  }
+  if (config.ball.x + config.ball.width >= config.cvs.width) {
+    if (config.ball.dx > 0) {
+      config.ball.dx *= -1;
+    }
+
     return;
   }
   if (config.ball.y <= 0) {
-    config.ball.dy *= -1;
+    if (config.ball.dy < 0) {
+      config.ball.dy *= -1;
+    }
     return;
   }
   if (config.ball.y >= config.cvs.height) {
@@ -130,11 +136,12 @@ function update(delta) {
 
     if (isColliding) {
       if (b.type > 1 && b.count < 1) {
-        b.element.classList.add("crack")
+        b.element.classList.add("crack");
         b.count++;
       } else {
         b.status = false;
         b.element.style.opacity = 0;
+        config.gameStatus.score += 20;
       }
 
       // Calculate how deep the ball overlaps on each side
@@ -151,15 +158,12 @@ function update(delta) {
       if (Math.abs(minOverlapX - minOverlapY) < threshold) {
         config.ball.dx *= -1;
         config.ball.dy *= -1;
-        config.gameStatus.score += 20;
       } else if (minOverlapX < minOverlapY) {
         // side collision
         config.ball.dx *= -1;
-        config.gameStatus.score += 20;
       } else {
         // top/bottom collision
         config.ball.dy *= -1;
-        config.gameStatus.score += 20;
       }
 
       break;
@@ -193,13 +197,19 @@ function update(delta) {
 
 function nextLevel() {
   config.wait.status = true;
+  config.levelContainer.style.display = "block";
+  config.levelMessage.textContent = `Level ${config.Levels.level}`;
   setTimeout(() => {
+    config.levelContainer.style.display = "none";
     config.wait.status = false;
     clearAnimation();
     loop();
   }, 1500);
-  config.ball.speed += 3;
-  resetBall();
+  if (config.Levels.level < 3) {
+    config.ball.speed += 2.5;
+  } else {
+    config.ball.speed += 0.5;
+  }
   createBricks();
 }
 
@@ -280,5 +290,4 @@ function GameLoop() {
     }, 200);
   });
 }
-
-GameLoop();
+document.addEventListener("load", GameLoop());

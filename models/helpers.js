@@ -67,8 +67,8 @@ export function createBricks() {
   }
 }
 export function setupSizes() {
-  config.paddle.width = config.cvs.width * 0.16;
-  config.paddle.height = config.cvs.height * 0.04;
+  config.paddle.width = config.cvs.width * 0.10;
+  config.paddle.height = config.cvs.height * 0.02;
   config.paddle.x = config.cvs.width / 2 - config.paddle.width / 2;
   config.paddle.y = config.cvs.height - config.paddle.height - 40;
   config.paddleDive.style.width = `${config.paddle.width}px`;
@@ -82,7 +82,13 @@ export function setupSizes() {
   config.brick.width =
     (config.cvs.width - (config.brick.cols + 1) * config.brick.gap) /
     config.brick.cols;
-  config.brick.height = config.cvs.height * 0.05;
+    if (window.innerWidth > 400) {
+      config.brick.height = config.cvs.height * 0.04;
+      
+    }else{
+      config.brick.height = config.cvs.height * 0.028;
+      
+    }
 }
 
 export function updateGameAreaSize() {

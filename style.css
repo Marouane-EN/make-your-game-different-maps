@@ -90,10 +90,10 @@ body {
 
 .ball {
   position: absolute;
-  width: 2.5vw;
-  height: 2.5vw;
-  max-width: 16px;
-  max-height: 16px;
+  width: 2vw;
+  height: 2vw;
+  max-width: 14px;
+  max-height: 14px;
   background: radial-gradient(circle at 30% 30%, #fff, #c59a55);
   box-shadow: 0 0 15px rgba(214, 167, 91, 0.8);
   border-radius: 50%;
@@ -254,6 +254,9 @@ p {
 @media (max-width: 500px) {
   h1 {
     font-size: 25px;
+  }
+  .brick {
+    background-position: 47% 41%;
   }
 }
 

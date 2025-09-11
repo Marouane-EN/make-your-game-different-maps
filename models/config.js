@@ -8,12 +8,13 @@ export const gameMessage = document.getElementById("gameMessage");
 export const bricksContainer = document.getElementById("bricksContainer");
 export const timeValue = document.querySelector(".time-value");
 export const container = document.getElementById("gameArea");
-export const pauseIcon = document.querySelector(".pause-icon");
 export const continueBtn = document.getElementById("continueBtn");
 export const restartBtn = document.getElementById("restartBtn");
 export const scoreValue = document.querySelector(".score-value");
 export const lifeValue = document.querySelector(".lives-value");
 export const gameContainer = document.getElementById("content")
+export const levelContainer = document.getElementById("levelContainer")
+export const levelMessage = document.getElementById("levelMessage")
 
 
 // Game state
@@ -30,7 +31,7 @@ export const Level1 = [
   0, 0, 0, 0, 0, 0,
   1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1,
-  1, 1, 2, 2, 1, 1,
+  1, 1, 1, 1, 1, 1,
 ]
 
 export const Level2 = [
@@ -38,15 +39,15 @@ export const Level2 = [
   1, 1, 1, 1, 1, 1,
   1, 1, 0, 0, 1, 1,
   1, 0, 0, 0, 0, 1,
-  0, 0, 0, 0, 0, 0,
+  0, 0, 2, 2, 0, 0,
 ]
 
 export const Level3 = [
-  1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1,
-  1, 1, 0, 0, 1, 1,
+  1, 1, 1, 1, 2, 1,
+  1, 1, 1, 2, 1, 1,
+  1, 1, 2, 1, 1, 1,
+  1, 2, 1, 1, 1, 1,
+  2, 1, 0, 0, 1, 1,
 ]
 
 // Brick settings
